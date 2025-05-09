@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.projanyges">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.ProjAnYges">
+        <activity
+            android:name=".TelaProduto"
+            android:exported="false" />
+        <activity
+            android:name=".TelaScan"
+            android:exported="false" />
+        <activity
+            android:name=".TelaLogin"
+            android:exported="false" />
+        <activity
+            android:name=".TelaOpcao"
+            android:exported="false" />
+        <activity
+            android:name=".TelaCart"
+            android:exported="false" />
+        <activity
+            android:name=".TelaAcessib"
+            android:exported="false" />
+        <activity
+            android:name=".TelaHome"
+            android:exported="false" />
+        <activity
+            android:name=".Index"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
