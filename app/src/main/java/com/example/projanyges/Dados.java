@@ -9,8 +9,9 @@ import java.util.HashMap;
 
 public class Dados {
     public static String sh1,sh2, sh3;
-    public static Context ctx1;
+    public Context ctx1;
     public static Class<?> ctx2;
+    public static int idU = -1, idC = -1;
 
     public void pegaDados(String sg){
         sh1 = sg;
@@ -53,6 +54,28 @@ public class Dados {
         return lista;
     }
 
+    public static void limparCarrinho(String usu) {
+        if (carrinhos.containsKey(usu)) {
+            carrinhos.get(usu).clear();
+        }
+    }
+
+    public void pegaIdUsu(int id){
+        idU = id;
+    }
+
+    public int enviaIdUsu(){
+        return idU;
+    }
+
+    public void pegaIdCpm(int id){
+        idC = id;
+    }
+
+    public int enviaIdCpm(){
+        return idC;
+    }
+
     public boolean Verificar(String sg,String ss) {
         sh1 = sg;
         sh2 = ss;
@@ -71,7 +94,7 @@ public class Dados {
     }
 
     public Intent enviaAcesso(){
-        Intent troca=new Intent(ctx1,ctx2);
-        return troca;
-    };
+        Intent trocar=new Intent(ctx1,ctx2);
+        return trocar;
+    }
 }

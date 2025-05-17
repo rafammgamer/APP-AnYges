@@ -17,8 +17,8 @@ public class TelaProduto extends AppCompatActivity {
     Dados dd = new Dados();
     ImageView imgProd;
     TextView txtProd;
-    String envia, conta, txt, txtSele;
-    int img, imgSele;
+    String envia, conta, txtSele;
+    int imgSele;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,8 +50,10 @@ public class TelaProduto extends AppCompatActivity {
 
             if ("prod1".equals(envia)) {
                 dd.adicionaAoCarrinho(conta, R.drawable.rivotril, "Rivotril Gotas 2,5g 20ml Líquido");
+                dd.pegaIdCpm(1);
             } else if ("prod2".equals(envia)) {
                 dd.adicionaAoCarrinho(conta, R.drawable.paracetamol, "Paracetamol Prati 10 comprimidos 750mg");
+                dd.pegaIdCpm(4);
             }
 
             startActivity(c);

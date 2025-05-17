@@ -34,10 +34,12 @@ public class TelaLogin extends AppCompatActivity {
         bd.entBanco(this);
 
         try{
-            bd.RS = bd.stmt.executeQuery("SELECT email_usuario, senha_usuario FROM tblUsuario WHERE email_usuario ='" +texto1+ "' and senha_usuario ='" +texto2+ "';");
+            bd.RS = bd.stmt.executeQuery("SELECT ID_usuario, email_usuario, senha_usuario FROM tblUsuario WHERE email_usuario ='" +texto1+ "' and senha_usuario ='" +texto2+ "';");
             if (bd.RS.next()) {
                 String emailUsuario = bd.RS.getString("email_usuario");
+                int idUsuario = bd.RS.getInt("ID_usuario");
                 dd.pegaDados(emailUsuario);
+                dd.pegaIdUsu(idUsuario);
                 dd.recebeAcesso(a,b);
                 c=dd.enviaAcesso();
                 c.putExtra("email_usuario", emailUsuario);
