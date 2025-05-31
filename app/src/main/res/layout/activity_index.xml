@@ -21,7 +21,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:contentDescription="AnYges"
-            android:src="@drawable/logo" />
+            android:src="@drawable/logologin" />
 
         <TextView
             android:id="@+id/toolbar_title"
@@ -94,6 +94,10 @@
             app:srcCompat="@drawable/logoscanner" />
     </LinearLayout>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="595dp"
@@ -104,8 +108,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="54dp"
-            android:gravity="center"
             android:background="#1F6124"
+            android:gravity="center"
             android:orientation="horizontal"
             android:padding="8dp">
 
@@ -342,5 +346,8 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    </ScrollView>
+
 
 </LinearLayout>

@@ -23,7 +23,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:contentDescription="AnYges"
-            android:src="@drawable/logo" />
+            android:src="@drawable/logologin" />
 
         <TextView
             android:id="@+id/toolbar_title"

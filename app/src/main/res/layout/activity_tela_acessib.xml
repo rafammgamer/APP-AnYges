@@ -18,7 +18,7 @@
             android:id="@+id/image_toolbar"
             android:layout_width="40dp"
             android:layout_height="match_parent"
-            android:src="@drawable/logo"
+            android:src="@drawable/logologin"
             android:contentDescription="AnYges"
             android:layout_gravity="center_vertical" />
         <TextView
@@ -119,12 +119,12 @@
         android:id="@+id/imageView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/logodefault" />
+        app:srcCompat="@drawable/logodefault1" />
 
     <ImageView
         android:id="@+id/imageView7"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/logodefault" />
+        app:srcCompat="@drawable/logodefault1" />
 
 </LinearLayout>

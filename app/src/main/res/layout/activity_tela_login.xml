@@ -19,7 +19,7 @@
             android:id="@+id/image_toolbar"
             android:layout_width="40dp"
             android:layout_height="match_parent"
-            android:src="@drawable/logologindark"
+            android:src="@drawable/logologindark1"
             android:contentDescription="AnYges"
             android:layout_gravity="center_vertical" />
 

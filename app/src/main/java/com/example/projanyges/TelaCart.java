@@ -2,6 +2,7 @@ package com.example.projanyges;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Pair;
@@ -21,7 +22,7 @@ public class TelaCart extends AppCompatActivity {
     Dados dd = new Dados();
     Conexao cone = new Conexao();
     Rand rd = new Rand();
-    LinearLayout mainScroll, itemL;
+    LinearLayout mainScroll;
     String usu, itm, cdRes;
     ImageView imgV;
     TextView txtNome, btnRemover;
@@ -39,21 +40,27 @@ public class TelaCart extends AppCompatActivity {
         //Toast.makeText(this, "Itens no carrinho: " + carrinho.size(), Toast.LENGTH_LONG).show();
     }
     public void recriarCarrinho(){
-        ArrayList<Pair<Integer, String>> carrinho = dd.getCarrinho(usu);
+        ArrayList<Dados.itemCart> carrinho = dd.getCarrinho(usu);
         for (int i = 0; i < carrinho.size(); i++) {
-            Pair<Integer, String> item = carrinho.get(i);
-            int index = i;
+            Dados.itemCart item = carrinho.get(i);
 
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            );
+            params.setMargins(0, 0, 0, 20);
             LinearLayout linha = new LinearLayout(a);
             linha.setOrientation(LinearLayout.VERTICAL);
             linha.setPadding(16, 16, 16, 16);
+            linha.setLayoutParams(params);
+            linha.setBackgroundColor(getResources().getColor(R.color.gray_back));
 
             imgV = new ImageView(this);
-            imgV.setImageResource(item.first);
+            imgV.setImageResource(item.imgId);
             imgV.setLayoutParams(new LinearLayout.LayoutParams(300, 300));
 
             txtNome = new TextView(this);
-            txtNome.setText(item.second);
+            txtNome.setText(item.desc);
             txtNome.setTextSize(18);
             txtNome.setPadding(32, 10, 0, 0);
 
@@ -63,7 +70,7 @@ public class TelaCart extends AppCompatActivity {
             btnRemover.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
             btnRemover.setPadding(32, 0, 0, 10);
             btnRemover.setOnClickListener(view -> {
-                dd.getCarrinho(usu).remove(index);
+                dd.getCarrinho(usu).remove(item);
                 mainScroll.removeAllViews();
                 recriarCarrinho();
             });
@@ -74,15 +81,29 @@ public class TelaCart extends AppCompatActivity {
         }
     }
 
-    Conexao bd = new Conexao();
     public void finalizar (View v){
-        bd.entBanco(a);
+        cone.entBanco(a);
         if(usu == null){
-            Toast.makeText(a.getApplicationContext(), "Não há produtos no carrinho", Toast.LENGTH_SHORT).show();
+            Toast.makeText(a.getApplicationContext(), "Necessário fazer login", Toast.LENGTH_SHORT).show();
         } else {
-            selecao();
-            dd.limparCarrinho(usu);
-            mainScroll.removeAllViews();
+            new AlertDialog.Builder(a)
+                    .setTitle("Confirmar Pedido")
+                    .setMessage("Deseja realizar o pedido?")
+                    .setPositiveButton("Sim",(dialog, wich) -> {
+                // Se o usuário confirmar, executa a finalização e vai para TelaCupons
+                    selecao();
+                    dd.limparCarrinho(usu);
+                    mainScroll.removeAllViews();
+                    b = TelaCupons.class;
+                    dd.recebeAcesso(a, b);
+                    c = dd.enviaAcesso();
+                    startActivity(c);
+                    finish();
+                })
+                    .setNegativeButton("Não",(dialog, wich) -> {
+                        dialog.dismiss();
+                    })
+                    .show();
         }
     }
     public void selecao(){
@@ -99,17 +120,20 @@ public class TelaCart extends AppCompatActivity {
             if(cone.RS.next()){
                 idPedido = cone.RS.getInt(1);
             }
-            cdRes = rd.codigoResgate(8);
             if(idPedido != -1){
-                String sqlResgate = "INSERT INTO tblResgate (ID_cupom, ID_pedido, codigo_resgate, dt_expiracao, utilizado)" +
-                        "VALUES ('"+idCupom+"','"+idPedido+"','"+cdRes+"','01-01-2026','N')";
-                cone.stmt.executeUpdate(sqlResgate);
+                ArrayList<Dados.itemCart> carrinho = dd.getCarrinho(usu);
+                for(Dados.itemCart item : carrinho){
+                    cdRes = rd.codigoResgate(8);
+                    String sqlResgate = "INSERT INTO tblResgate (ID_cupom, ID_pedido, codigo_resgate, dt_expiracao, utilizado)" +
+                            "VALUES ('"+item.idCpm+"','"+idPedido+"','"+cdRes+"','01-01-2026','N')";
+                    cone.stmt.executeUpdate(sqlResgate);
+                }
                 Toast.makeText(this, "Pedido finalizado!", Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(this, "Erro ao gerar ID do pedido.", Toast.LENGTH_SHORT).show();
             }
         }catch (Exception ex){
-
+            Toast.makeText(this, "Erro ao finalizar pedido.", Toast.LENGTH_SHORT).show();
         }
 
     }

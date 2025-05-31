@@ -31,7 +31,7 @@ public class Conexao {
             String url = "jdbc:jtds:sqlserver://192.168.0.153:1433;databaseName=anyges";
             con = DriverManager.getConnection(url, "sa", "12345");
             stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            Toast.makeText(ctx.getApplicationContext(), "conectado", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(ctx.getApplicationContext(), "conectado", Toast.LENGTH_SHORT).show();
         }
         catch(SQLException ex){
             Toast.makeText(ctx.getApplicationContext(), "Erro de conexão", Toast.LENGTH_SHORT).show();

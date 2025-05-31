@@ -17,7 +17,7 @@ public class TelaProduto extends AppCompatActivity {
     Dados dd = new Dados();
     ImageView imgProd;
     TextView txtProd;
-    String envia, conta, txtSele;
+    String envia, conta, txtSele, nomeSele;
     int imgSele;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +30,7 @@ public class TelaProduto extends AppCompatActivity {
         intent = getIntent();
         imgSele = intent.getIntExtra("imagem", R.drawable.estrela);
         txtSele = intent.getStringExtra("descricao");
+        nomeSele = intent.getStringExtra("nome");
 
         imgProd.setImageResource(imgSele);
         txtProd.setText(txtSele);
@@ -44,16 +45,17 @@ public class TelaProduto extends AppCompatActivity {
 
     public void Adicionar(View v){
         b = TelaCart.class;
+        int idCpm = dd.buscaCpmNome(nomeSele, a);
         if(conta != null){
             dd.recebeAcesso(a, b);
             c = dd.enviaAcesso();
 
             if ("prod1".equals(envia)) {
-                dd.adicionaAoCarrinho(conta, R.drawable.rivotril, "Rivotril Gotas 2,5g 20ml Líquido");
-                dd.pegaIdCpm(1);
+                dd.adicionaAoCarrinho(conta, R.drawable.rivotril, txtSele, idCpm);
+                dd.pegaIdCpm(idCpm);
             } else if ("prod2".equals(envia)) {
-                dd.adicionaAoCarrinho(conta, R.drawable.paracetamol, "Paracetamol Prati 10 comprimidos 750mg");
-                dd.pegaIdCpm(4);
+                dd.adicionaAoCarrinho(conta, R.drawable.paracetamol, txtSele, idCpm);
+                dd.pegaIdCpm(idCpm);
             }
 
             startActivity(c);

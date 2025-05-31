@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProjAnYges">
         <activity
+            android:name=".TelaCupons"
+            android:exported="false" />
+        <activity
             android:name=".TelaProduto"
             android:exported="false" />
         <activity

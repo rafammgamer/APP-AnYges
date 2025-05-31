@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         imV = findViewById(R.id.imV);
-        imV.setImageResource(R.drawable.logodefault);
+        imV.setImageResource(R.drawable.logodefault1);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

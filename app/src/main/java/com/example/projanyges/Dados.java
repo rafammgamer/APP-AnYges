@@ -8,10 +8,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Dados {
+    Conexao con = new Conexao();
     public static String sh1,sh2, sh3;
     public Context ctx1;
     public static Class<?> ctx2;
-    public static int idU = -1, idC = -1;
+    public static int idU = -1, idC = -1, idPr = -1;
 
     public void pegaDados(String sg){
         sh1 = sg;
@@ -37,24 +38,35 @@ public class Dados {
         return sh3;
     }
 
-    private static HashMap<String, ArrayList<Pair<Integer, String>>> carrinhos = new HashMap<>();
+    public class itemCart{
+        public int imgId;
+        public String desc;
+        public int idCpm;
+        public itemCart(int imgId, String desc, int idCpm){
+            this.imgId = imgId;
+            this.desc = desc;
+            this.idCpm = idCpm;
+        }
+    }
 
-    public static void adicionaAoCarrinho(String usu, int imgId, String desc) {
+    private static HashMap<String, ArrayList<itemCart>> carrinhos = new HashMap<>();
+
+    public void adicionaAoCarrinho(String usu, int imgId, String desc, int idCpm) {
         if (!carrinhos.containsKey(usu)) {
             carrinhos.put(usu, new ArrayList<>());
         }
-        carrinhos.get(usu).add(new Pair<>(imgId, desc));
+        carrinhos.get(usu).add(new itemCart(imgId, desc, idCpm));
     }
 
-    public static ArrayList<Pair<Integer, String>> getCarrinho(String usu) {
-        ArrayList<Pair<Integer, String>> lista = carrinhos.get(usu);
+    public ArrayList<itemCart> getCarrinho(String usu) {
+        ArrayList<itemCart> lista = carrinhos.get(usu);
         if (lista == null) {
             return new ArrayList<>();
         }
         return lista;
     }
 
-    public static void limparCarrinho(String usu) {
+    public void limparCarrinho(String usu) {
         if (carrinhos.containsKey(usu)) {
             carrinhos.get(usu).clear();
         }
@@ -73,6 +85,21 @@ public class Dados {
     }
 
     public int enviaIdCpm(){
+        return idC;
+    }
+
+    public int buscaCpmNome(String nCpm, Context ctx){
+        con.entBanco(ctx);
+        try{
+            String query = "SELECT ID_cupom FROM tblCupom WHERE nome_cupom = '"+ nCpm +"'";
+            con.RS = con.stmt.executeQuery(query);
+            if(con.RS.next()){
+                idC = con.RS.getInt("ID_cupom");
+            }
+            con.RS.close();
+        }catch(Exception e){
+
+        }
         return idC;
     }
 
