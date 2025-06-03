@@ -2,13 +2,15 @@ package com.example.projanyges;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import java.sql.SQLException;
+
+import at.favre.lib.crypto.bcrypt.BCrypt;
 
 public class TelaLogin extends AppCompatActivity {
 
@@ -34,17 +36,24 @@ public class TelaLogin extends AppCompatActivity {
         bd.entBanco(this);
 
         try{
-            bd.RS = bd.stmt.executeQuery("SELECT ID_usuario, email_usuario, senha_usuario FROM tblUsuario WHERE email_usuario ='" +texto1+ "' and senha_usuario ='" +texto2+ "';");
+            bd.RS = bd.stmt.executeQuery("SELECT ID_usuario, email_usuario, senha_usuario FROM tblUsuario WHERE email_usuario ='" +texto1+ "';");
             if (bd.RS.next()) {
                 String emailUsuario = bd.RS.getString("email_usuario");
                 int idUsuario = bd.RS.getInt("ID_usuario");
-                dd.pegaDados(emailUsuario);
-                dd.pegaIdUsu(idUsuario);
-                dd.recebeAcesso(a,b);
-                c=dd.enviaAcesso();
-                c.putExtra("email_usuario", emailUsuario);
-                startActivity(c);
-                finish();
+                String hashSenha = bd.RS.getString("senha_usuario");
+
+                if (hashSenha != null){
+                    BCrypt.Result result = BCrypt.verifyer().verify(texto2.toCharArray(), hashSenha);
+                    if(result.verified){
+                        dd.pegaDados(emailUsuario);
+                        dd.pegaIdUsu(idUsuario);
+                        dd.recebeAcesso(a,b);
+                        c=dd.enviaAcesso();
+                        c.putExtra("email_usuario", emailUsuario);
+                        startActivity(c);
+                        finish();
+                    }
+                }
             } else if (dd.Verificar(texto1,texto2)){
                 dd.recebeAcesso(a,b);
                 c=dd.enviaAcesso();
@@ -55,8 +64,13 @@ public class TelaLogin extends AppCompatActivity {
                 Toast.makeText(this, "Usuário e/ou senha incorretos. Tente novamente.", Toast.LENGTH_SHORT).show();
             }
         } catch (SQLException ex) {
-            Toast.makeText(this, "erro no acesso", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Erro no acesso", Toast.LENGTH_SHORT).show();
+            ex.printStackTrace();
         }
+//        catch (Exception ex) {
+//            Toast.makeText(this, "Erro inesperado: " + ex.getMessage(), Toast.LENGTH_SHORT).show();
+//            ex.printStackTrace();
+//        }
 
         /*if(dd.Verificar(texto1,texto2)){
             dd.recebeAcesso(a,b);

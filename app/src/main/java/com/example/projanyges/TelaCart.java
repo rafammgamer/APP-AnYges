@@ -2,8 +2,8 @@ package com.example.projanyges;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.View;
@@ -25,7 +25,7 @@ public class TelaCart extends AppCompatActivity {
     LinearLayout mainScroll;
     String usu, itm, cdRes;
     ImageView imgV;
-    TextView txtNome, btnRemover;
+    TextView txtNome, txtDesc, txtValor, btnRemover;
     int idUsu, idCupom;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +35,6 @@ public class TelaCart extends AppCompatActivity {
         itm = dd.enviaItem();
         usu = dd.enviaDados();
         idUsu = dd.enviaIdUsu();
-        idCupom = dd.enviaIdCpm();
         recriarCarrinho();
         //Toast.makeText(this, "Itens no carrinho: " + carrinho.size(), Toast.LENGTH_LONG).show();
     }
@@ -60,9 +59,19 @@ public class TelaCart extends AppCompatActivity {
             imgV.setLayoutParams(new LinearLayout.LayoutParams(300, 300));
 
             txtNome = new TextView(this);
-            txtNome.setText(item.desc);
+            txtNome.setText(item.nomeCpm);
             txtNome.setTextSize(18);
             txtNome.setPadding(32, 10, 0, 0);
+
+            txtDesc = new TextView(this);
+            txtDesc.setText(item.desc);
+            txtDesc.setTextSize(16);
+            txtDesc.setPadding(32, 4, 0, 0);
+
+            txtValor = new TextView(this);
+            txtValor.setText(item.valor + " Dp");
+            txtValor.setTextSize(16);
+            txtValor.setPadding(32, 4, 0, 10);
 
             btnRemover = new TextView(this);
             btnRemover.setText("X");
@@ -77,6 +86,8 @@ public class TelaCart extends AppCompatActivity {
             linha.addView(btnRemover);
             linha.addView(imgV);
             linha.addView(txtNome);
+            linha.addView(txtDesc);
+            linha.addView(txtValor);
             mainScroll.addView(linha);
         }
     }
@@ -107,8 +118,9 @@ public class TelaCart extends AppCompatActivity {
         }
     }
     public void selecao(){
-        if (idCupom == -1) {
-            Toast.makeText(this, "Cupom inválido", Toast.LENGTH_SHORT).show();
+        ArrayList<Dados.itemCart> carrinho = dd.getCarrinho(usu);
+        if (carrinho == null || carrinho.isEmpty()) {
+            Toast.makeText(this, "Carrinho está vazio!", Toast.LENGTH_SHORT).show();
             return;
         }
         cone.entBanco(a);
@@ -121,7 +133,6 @@ public class TelaCart extends AppCompatActivity {
                 idPedido = cone.RS.getInt(1);
             }
             if(idPedido != -1){
-                ArrayList<Dados.itemCart> carrinho = dd.getCarrinho(usu);
                 for(Dados.itemCart item : carrinho){
                     cdRes = rd.codigoResgate(8);
                     String sqlResgate = "INSERT INTO tblResgate (ID_cupom, ID_pedido, codigo_resgate, dt_expiracao, utilizado)" +

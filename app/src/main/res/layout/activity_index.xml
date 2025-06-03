@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context=".Index">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
@@ -47,7 +47,7 @@
             android:textSize="25sp"
             android:textStyle="bold" />-->
 
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
     <LinearLayout
         android:id="@+id/l1"
@@ -218,131 +218,14 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="328dp"
+            android:layout_height="match_parent"
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
-            <LinearLayout
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyCupons"
                 android:layout_width="match_parent"
-                android:layout_height="135dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:id="@+id/prod1"
-                    android:layout_width="152dp"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:onClick="Produto"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/imageView8"
-                        android:layout_width="wrap_content"
-                        android:layout_height="78dp"
-                        android:padding="10dp"
-                        app:srcCompat="@drawable/rivotril" />
-
-                    <TextView
-                        android:id="@+id/textView2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/inriasans"
-                        android:text="Rivotril Gotas 2,5g\n20ml Líquido"
-                        android:textAlignment="center"
-                        android:textSize="14sp" />
-
-                </LinearLayout>
-
-                <Space
-                    android:layout_width="56dp"
-                    android:layout_height="wrap_content" />
-
-                <LinearLayout
-                    android:id="@+id/prod2"
-                    android:layout_width="152dp"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:onClick="Produto"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/imageView9"
-                        android:layout_width="wrap_content"
-                        android:layout_height="78dp"
-                        app:srcCompat="@drawable/paracetamol" />
-
-                    <TextView
-                        android:id="@+id/textView10"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/inriasans"
-                        android:text="Paracetamol Prati\n10 comprimidos 750mg"
-                        android:textAlignment="center"
-                        android:textSize="14sp" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="20dp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="135dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="151dp"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/imageView10"
-                        android:layout_width="wrap_content"
-                        android:layout_height="78dp"
-                        app:srcCompat="@drawable/hcfmusp" />
-
-                    <TextView
-                        android:id="@+id/textView13"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:fontFamily="@font/inriasans"
-                        android:text="Dra. Iohana Maria\nPsicóloga\n Domingo à Quarta-feira"
-                        android:textAlignment="center"
-                        android:textSize="14sp" />
-
-                </LinearLayout>
-
-                <Space
-                    android:layout_width="56dp"
-                    android:layout_height="wrap_content" />
-
-                <LinearLayout
-                    android:layout_width="151dp"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/imageView11"
-                        android:layout_width="wrap_content"
-                        android:layout_height="78dp"
-                        app:srcCompat="@drawable/unimed" />
-
-                    <TextView
-                        android:id="@+id/textView12"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/inriasans"
-                        android:text="Dr. Henrique Ferraz\nPediatra\nTerça e Quinta-Feira"
-                        android:textAlignment="center"
-                        android:textSize="14sp" />
-
-                </LinearLayout>
-            </LinearLayout>
+                android:layout_height="match_parent" />
         </LinearLayout>
 
     </LinearLayout>

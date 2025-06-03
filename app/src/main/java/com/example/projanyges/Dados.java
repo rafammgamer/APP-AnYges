@@ -30,48 +30,6 @@ public class Dados {
         return sh2;
     }
 
-    public void recebeItem(String sg){
-        sh3 = sg;
-    }
-
-    public String enviaItem(){
-        return sh3;
-    }
-
-    public class itemCart{
-        public int imgId;
-        public String desc;
-        public int idCpm;
-        public itemCart(int imgId, String desc, int idCpm){
-            this.imgId = imgId;
-            this.desc = desc;
-            this.idCpm = idCpm;
-        }
-    }
-
-    private static HashMap<String, ArrayList<itemCart>> carrinhos = new HashMap<>();
-
-    public void adicionaAoCarrinho(String usu, int imgId, String desc, int idCpm) {
-        if (!carrinhos.containsKey(usu)) {
-            carrinhos.put(usu, new ArrayList<>());
-        }
-        carrinhos.get(usu).add(new itemCart(imgId, desc, idCpm));
-    }
-
-    public ArrayList<itemCart> getCarrinho(String usu) {
-        ArrayList<itemCart> lista = carrinhos.get(usu);
-        if (lista == null) {
-            return new ArrayList<>();
-        }
-        return lista;
-    }
-
-    public void limparCarrinho(String usu) {
-        if (carrinhos.containsKey(usu)) {
-            carrinhos.get(usu).clear();
-        }
-    }
-
     public void pegaIdUsu(int id){
         idU = id;
     }
@@ -88,20 +46,64 @@ public class Dados {
         return idC;
     }
 
-    public int buscaCpmNome(String nCpm, Context ctx){
-        con.entBanco(ctx);
-        try{
-            String query = "SELECT ID_cupom FROM tblCupom WHERE nome_cupom = '"+ nCpm +"'";
-            con.RS = con.stmt.executeQuery(query);
-            if(con.RS.next()){
-                idC = con.RS.getInt("ID_cupom");
-            }
-            con.RS.close();
-        }catch(Exception e){
-
-        }
-        return idC;
+    public void recebeItem(String sg){
+        sh3 = sg;
     }
+
+    public String enviaItem(){
+        return sh3;
+    }
+
+    public static class itemCart{
+        public int imgId;
+        public String desc, nomeCpm;
+        public int idCpm;
+        public double valor;
+        public itemCart(int idCpm, int imgId, String nomeCpm, String desc, double valor){
+            this.idCpm = idCpm;
+            this.imgId = imgId;
+            this.nomeCpm = nomeCpm;
+            this.desc = desc;
+            this.valor = valor;
+        }
+    }
+
+    private static HashMap<String, ArrayList<itemCart>> carrinhos = new HashMap<>();
+
+//    public void adicionaAoCarrinho(String usu, int imgId,String nomeCpm, String desc, double valor, int idCpm) {
+//        if (!carrinhos.containsKey(usu)) {
+//            carrinhos.put(usu, new ArrayList<>());
+//        }
+//        carrinhos.get(usu).add(new itemCart(imgId,nomeCpm, desc, valor, idCpm));
+//    }
+
+    public ArrayList<itemCart> getCarrinho(String usu) {
+        if (!carrinhos.containsKey(usu)) {
+            carrinhos.put(usu, new ArrayList<>());
+        }
+        return carrinhos.get(usu);
+    }
+
+    public void limparCarrinho(String usu) {
+        if (carrinhos.containsKey(usu)) {
+            carrinhos.get(usu).clear();
+        }
+    }
+
+//    public int buscaCpmNome(String nCpm, Context ctx){
+//        con.entBanco(ctx);
+//        try{
+//            String query = "SELECT ID_cupom FROM tblCupom WHERE nome_cupom = '"+ nCpm +"'";
+//            con.RS = con.stmt.executeQuery(query);
+//            if(con.RS.next()){
+//                idC = con.RS.getInt("ID_cupom");
+//            }
+//            con.RS.close();
+//        }catch(Exception e){
+//
+//        }
+//        return idC;
+//    }
 
     public boolean Verificar(String sg,String ss) {
         sh1 = sg;
