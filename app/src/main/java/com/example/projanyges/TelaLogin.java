@@ -36,16 +36,20 @@ public class TelaLogin extends AppCompatActivity {
         bd.entBanco(this);
 
         try{
-            bd.RS = bd.stmt.executeQuery("SELECT ID_usuario, email_usuario, senha_usuario FROM tblUsuario WHERE email_usuario ='" +texto1+ "';");
+            bd.RS = bd.stmt.executeQuery("SELECT ID_usuario, nome_usuario, sobrenome_usuario, email_usuario, senha_usuario FROM tblUsuario WHERE email_usuario ='" +texto1+ "';");
             if (bd.RS.next()) {
                 String emailUsuario = bd.RS.getString("email_usuario");
                 int idUsuario = bd.RS.getInt("ID_usuario");
+                String nomeUsuario = bd.RS.getString("nome_usuario");
+                String sobrenomeUsuario = bd.RS.getString("sobrenome_usuario");
+                String nomeCompleto = nomeUsuario + " " + sobrenomeUsuario;
                 String hashSenha = bd.RS.getString("senha_usuario");
 
                 if (hashSenha != null){
                     BCrypt.Result result = BCrypt.verifyer().verify(texto2.toCharArray(), hashSenha);
                     if(result.verified){
                         dd.pegaDados(emailUsuario);
+                        dd.pegaNome(nomeCompleto);
                         dd.pegaIdUsu(idUsuario);
                         dd.recebeAcesso(a,b);
                         c=dd.enviaAcesso();

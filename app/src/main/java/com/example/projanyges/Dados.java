@@ -9,7 +9,7 @@ import java.util.HashMap;
 
 public class Dados {
     Conexao con = new Conexao();
-    public static String sh1,sh2, sh3;
+    public static String sh1,sh2, sh3, nome;
     public Context ctx1;
     public static Class<?> ctx2;
     public static int idU = -1, idC = -1, idPr = -1;
@@ -20,6 +20,14 @@ public class Dados {
 
     public String enviaDados(){
         return sh1;
+    }
+
+    public void pegaNome(String sg){
+        nome = sg;
+    }
+
+    public String enviaNome(){
+        return nome;
     }
 
     public void recebeEscuro(String sg){

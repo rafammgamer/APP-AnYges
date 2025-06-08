@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.sql.ResultSet;
 import java.util.ArrayList;
 
 public class TelaCart extends AppCompatActivity {
@@ -102,6 +103,7 @@ public class TelaCart extends AppCompatActivity {
                     .setMessage("Deseja realizar o pedido?")
                     .setPositiveButton("Sim",(dialog, wich) -> {
                 // Se o usuário confirmar, executa a finalização e vai para TelaCupons
+                    gasto();
                     selecao();
                     dd.limparCarrinho(usu);
                     mainScroll.removeAllViews();
@@ -147,6 +149,45 @@ public class TelaCart extends AppCompatActivity {
             Toast.makeText(this, "Erro ao finalizar pedido.", Toast.LENGTH_SHORT).show();
         }
 
+    }
+    public void gasto(){
+        cone.entBanco(a);
+        try{
+            String sqlDoacoes = "SELECT ISNULL(SUM(pontuacao), 0) AS pontosDoacao FROM tblDoacao WHERE ID_usuario = ?";
+            ResultSet rsDoa = cone.stmt.executeQuery(sqlDoacoes);
+            int pontosDoa = 0;
+            if(rsDoa.next()){
+                pontosDoa = cone.RS.getInt("pontosDoacao");
+            }
+            rsDoa.close();
+
+            String sqlPedidos = "SELECT ISNULL(SUM(c.valor_cupom), 0) AS pontosPedidos " +
+                    "FROM tblPedido p " +
+                    "JOIN tblResgate r ON p.ID_pedido = r.ID_pedido " +
+                    "JOIN tblCupom c ON r.ID_cupom = c.ID_cupom " +
+                    "WHERE p.ID_usuario = " + idUsu;
+            ResultSet rsPed = cone.stmt.executeQuery(sqlPedidos);
+            int pontosPed = 0;
+            if(rsPed.next()){
+                pontosPed = cone.RS.getInt("pontosPedidos");
+            }
+            rsPed.close();
+
+            int pontosDisp = pontosDoa - pontosPed;
+            ArrayList<Dados.itemCart> cart = dd.getCarrinho(usu);
+            int totalCart = 0;
+            for(Dados.itemCart item : cart){
+                totalCart += item.valor;
+            }
+
+            if(totalCart > pontosDisp){
+                Toast.makeText(this, "Você não possui pontos suficientes para concluir o pedido.", Toast.LENGTH_LONG);
+            }
+
+        }catch(Exception ex){
+            Toast.makeText(a, "Erro ao consultar pontuação: " + ex.getMessage(), Toast.LENGTH_LONG).show();
+            ex.printStackTrace();
+        }
     }
 
     public void Perfil(View v){

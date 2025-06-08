@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class TelaHome extends AppCompatActivity {
@@ -14,13 +15,14 @@ public class TelaHome extends AppCompatActivity {
     View main2;
     Button bt, bt2;
     TextView Tx1,Tx2,TxNot,TxAccs,TxAid,TxFdback;
-    String nome;
+    String nome, email;
+    int idUsu;
     String d1="claro";
     Dados dd = new Dados();
     Context a = this;
     Class<?> b;
     Intent c;
-    Conexao bd = new Conexao();
+    Conexao con = new Conexao();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,22 +34,41 @@ public class TelaHome extends AppCompatActivity {
         TxAid = findViewById(R.id.txAid);
         TxFdback = findViewById(R.id.txFdback);
         main2 = findViewById(R.id.main2);
-        nome = dd.enviaDados();
-        d1 = dd.enviaEscuro();
         bt=findViewById(R.id.button4);
         bt2=findViewById(R.id.button5);
-        if(nome==null||nome.equals("")){
-            Tx1.setText("Olá, visitante!");
-            Tx2.setVisibility(View.INVISIBLE);
-            bt.setVisibility(View.INVISIBLE);
-            bt2.setVisibility(View.VISIBLE);
-        }else{
-            Tx1.setText("Olá, "+nome+"!");
-            Tx2.setText("50.000 Dp");
-            Tx2.setVisibility(View.VISIBLE);
-            bt.setVisibility(View.VISIBLE);
-            bt2.setVisibility(View.INVISIBLE);
+        d1 = dd.enviaEscuro();
+        email = dd.enviaDados();
+        nome = dd.enviaNome();
+        idUsu = dd.enviaIdUsu();
+        con.entBanco(a);
+        try{
+            String sql = "SELECT ISNULL((SELECT SUM(pontuacao) FROM tblDoacao WHERE ID_usuario = "+idUsu+"), 0) - " +
+                    "ISNULL((SELECT SUM(c.valor) FROM tblResgate r " +
+                    "INNER JOIN tblPedido p ON r.ID_pedido = p.ID_pedido " +
+                    "INNER JOIN tblCupom c ON r.ID_cupom = c.ID_cupom " +
+                    "WHERE p.ID_usuario = "+idUsu+"), 0) AS saldo_pontos";
+            con.RS = con.stmt.executeQuery(sql);
+            int saldoPontos = 0;
+            if(con.RS.next()){
+                saldoPontos = con.RS.getInt("saldo_pontos");
+                if(email==null||email.equals("")){
+                    Tx1.setText("Olá, visitante!");
+                    Tx2.setVisibility(View.INVISIBLE);
+                    bt.setVisibility(View.INVISIBLE);
+                    bt2.setVisibility(View.VISIBLE);
+                }else{
+                    Tx1.setText("Olá, "+nome+"!");
+                    Tx2.setText(saldoPontos +" Dp");
+                    Tx2.setVisibility(View.VISIBLE);
+                    bt.setVisibility(View.VISIBLE);
+                    bt2.setVisibility(View.INVISIBLE);
+                }
+            }
+        }catch(Exception ex){
+            //Toast.makeText(this, "Erro ao buscar pontos do usuário", Toast.LENGTH_SHORT).show();
+            ex.printStackTrace();
         }
+
 
 
         /*if(d1.equals("escuro")){
