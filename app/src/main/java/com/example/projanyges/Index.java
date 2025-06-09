@@ -32,7 +32,7 @@ public class Index extends AppCompatActivity {
         recyView = findViewById(R.id.recyCupons);
         recyView.setLayoutManager(new LinearLayoutManager(this));
 
-        adapter = new CupomAdap(listaCupom,this, cupom -> {
+        adapter = new CupomAdap(listaCupom,this, false, cupom -> {
             Intent i = new Intent(Index.this, TelaProduto.class);
             i.putExtra("id",cupom.getId());
             i.putExtra("nome", cupom.getNome());
@@ -68,22 +68,6 @@ public class Index extends AppCompatActivity {
             ex.printStackTrace();
         }
     }
-//    public void Produto(View v){
-//        b = TelaProduto.class;
-//        Intent intent = new Intent(a, b);
-//        if(v.getId() == R.id.prod1){
-//            dd.recebeItem("prod1");
-//            intent.putExtra("imagem", R.drawable.rivotril);
-//            intent.putExtra("descricao", "Rivotril Gotas 2,5g\n20ml Líquido");
-//            intent.putExtra("nome", "Rivotril");
-//        } else if(v.getId() == R.id.prod2){
-//            dd.recebeItem("prod2");
-//            intent.putExtra("imagem", R.drawable.paracetamol);
-//            intent.putExtra("descricao", "Paracetamol Prati\n10 comprimidos 750mg");
-//            intent.putExtra("nome", "Paracetamol 750mg");
-//        }
-//        startActivity(intent);
-//    }
 
     public void Perfil(View v){
         b=TelaHome.class;

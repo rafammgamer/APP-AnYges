@@ -36,6 +36,7 @@ public class TelaCart extends AppCompatActivity {
         itm = dd.enviaItem();
         usu = dd.enviaDados();
         idUsu = dd.enviaIdUsu();
+        cone.entBanco(a);
         recriarCarrinho();
         //Toast.makeText(this, "Itens no carrinho: " + carrinho.size(), Toast.LENGTH_LONG).show();
     }
@@ -94,7 +95,6 @@ public class TelaCart extends AppCompatActivity {
     }
 
     public void finalizar (View v){
-        cone.entBanco(a);
         if(usu == null){
             Toast.makeText(a.getApplicationContext(), "Necessário fazer login", Toast.LENGTH_SHORT).show();
         } else {
@@ -125,7 +125,6 @@ public class TelaCart extends AppCompatActivity {
             Toast.makeText(this, "Carrinho está vazio!", Toast.LENGTH_SHORT).show();
             return;
         }
-        cone.entBanco(a);
         try{
             String sqlPedido = "INSERT INTO tblPedido (ID_usuario, dt_pedido) VALUES ('"+idUsu+"',GETDATE())";
             cone.stmt.executeUpdate(sqlPedido, java.sql.Statement.RETURN_GENERATED_KEYS);
@@ -151,7 +150,6 @@ public class TelaCart extends AppCompatActivity {
 
     }
     public void gasto(){
-        cone.entBanco(a);
         try{
             String sqlDoacoes = "SELECT ISNULL(SUM(pontuacao), 0) AS pontosDoacao FROM tblDoacao WHERE ID_usuario = ?";
             ResultSet rsDoa = cone.stmt.executeQuery(sqlDoacoes);
@@ -185,7 +183,7 @@ public class TelaCart extends AppCompatActivity {
             }
 
         }catch(Exception ex){
-            Toast.makeText(a, "Erro ao consultar pontuação: " + ex.getMessage(), Toast.LENGTH_LONG).show();
+            //Toast.makeText(a, "Erro ao consultar pontuação: " + ex.getMessage(), Toast.LENGTH_LONG).show();
             ex.printStackTrace();
         }
     }

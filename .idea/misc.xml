@@ -8,12 +8,15 @@
         <entry key="..\:/Users/Rafammgamer/AndroidStudioProjects/ProjAnYges/app/src/main/res/layout/activity_tela_acessib.xml" value="0.3546875" />
         <entry key="..\:/Users/Rafammgamer/AndroidStudioProjects/ProjAnYges/app/src/main/res/layout/activity_tela_cart.xml" value="0.33" />
         <entry key="..\:/Users/Rafammgamer/AndroidStudioProjects/ProjAnYges/app/src/main/res/layout/activity_tela_cupons.xml" value="0.33" />
+        <entry key="..\:/Users/Rafammgamer/AndroidStudioProjects/ProjAnYges/app/src/main/res/layout/activity_tela_hist.xml" value="0.33" />
         <entry key="..\:/Users/Rafammgamer/AndroidStudioProjects/ProjAnYges/app/src/main/res/layout/activity_tela_home.xml" value="0.3546875" />
         <entry key="..\:/Users/Rafammgamer/AndroidStudioProjects/ProjAnYges/app/src/main/res/layout/activity_tela_login.xml" value="0.3546875" />
         <entry key="..\:/Users/Rafammgamer/AndroidStudioProjects/ProjAnYges/app/src/main/res/layout/activity_tela_opcao.xml" value="0.3546875" />
         <entry key="..\:/Users/Rafammgamer/AndroidStudioProjects/ProjAnYges/app/src/main/res/layout/activity_tela_produto.xml" value="0.3546875" />
         <entry key="..\:/Users/Rafammgamer/AndroidStudioProjects/ProjAnYges/app/src/main/res/layout/activity_tela_scan.xml" value="0.3546875" />
         <entry key="..\:/Users/Rafammgamer/AndroidStudioProjects/ProjAnYges/app/src/main/res/layout/item_cupom.xml" value="0.3546875" />
+        <entry key="..\:/Users/Rafammgamer/AndroidStudioProjects/ProjAnYges/app/src/main/res/layout/item_pedido.xml" value="0.3546875" />
+        <entry key="..\:/Users/Rafammgamer/AndroidStudioProjects/ProjAnYges/app/src/main/res/layout/pedido_historico.xml" value="0.3546875" />
       </map>
     </option>
   </component>

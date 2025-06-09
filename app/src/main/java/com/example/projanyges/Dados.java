@@ -78,13 +78,6 @@ public class Dados {
 
     private static HashMap<String, ArrayList<itemCart>> carrinhos = new HashMap<>();
 
-//    public void adicionaAoCarrinho(String usu, int imgId,String nomeCpm, String desc, double valor, int idCpm) {
-//        if (!carrinhos.containsKey(usu)) {
-//            carrinhos.put(usu, new ArrayList<>());
-//        }
-//        carrinhos.get(usu).add(new itemCart(imgId,nomeCpm, desc, valor, idCpm));
-//    }
-
     public ArrayList<itemCart> getCarrinho(String usu) {
         if (!carrinhos.containsKey(usu)) {
             carrinhos.put(usu, new ArrayList<>());
@@ -97,21 +90,6 @@ public class Dados {
             carrinhos.get(usu).clear();
         }
     }
-
-//    public int buscaCpmNome(String nCpm, Context ctx){
-//        con.entBanco(ctx);
-//        try{
-//            String query = "SELECT ID_cupom FROM tblCupom WHERE nome_cupom = '"+ nCpm +"'";
-//            con.RS = con.stmt.executeQuery(query);
-//            if(con.RS.next()){
-//                idC = con.RS.getInt("ID_cupom");
-//            }
-//            con.RS.close();
-//        }catch(Exception e){
-//
-//        }
-//        return idC;
-//    }
 
     public boolean Verificar(String sg,String ss) {
         sh1 = sg;

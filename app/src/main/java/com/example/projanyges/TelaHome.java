@@ -137,6 +137,14 @@ public class TelaHome extends AppCompatActivity {
         finish();
     }
 
+    public void Historico(View v){
+        b = TelaHist.class;
+        dd.recebeAcesso(a,b);
+        c = dd.enviaAcesso();
+        startActivity(c);
+        finish();
+    }
+
     public void Home(View v){
         b=Index.class;
         dd.recebeAcesso(a,b);

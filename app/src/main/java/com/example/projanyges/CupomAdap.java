@@ -10,21 +10,31 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.projanyges.Cupom;
+
 import java.util.List;
 
 public class CupomAdap extends RecyclerView.Adapter<CupomAdap.ViewHolder> {
     private Context context;
     private List<Cupom> lista;
     private OnItemClickListener listener;
+    private boolean mostrarDadosResgate;
 
     public interface OnItemClickListener {
         void onItemClick(Cupom cupom);
     }
 
-        public CupomAdap(List<Cupom> lista, Context ctx, OnItemClickListener listener) {
+        public CupomAdap(List<Cupom> lista, Context ctx, boolean mostrarDadosResgate, OnItemClickListener listener) {
         this.context = ctx;
         this.lista = lista;
+        this.mostrarDadosResgate = mostrarDadosResgate;
         this.listener = listener;
+    }
+
+        public CupomAdap(Context context, List<Cupom> lista) {
+        this.context = context;
+        this.lista = lista;
+        this.listener = null; // ou algum valor padrão
     }
 
     @NonNull
@@ -47,7 +57,7 @@ public class CupomAdap extends RecyclerView.Adapter<CupomAdap.ViewHolder> {
         int resId = context.getResources().getIdentifier(nomeImagem, "drawable", context.getPackageName());
         holder.imagem.setImageResource(resId != 0 ? resId : R.drawable.estrela);
 
-        holder.itemView.setOnClickListener(v -> listener.onItemClick(cupom));
+        holder.itemView.setOnClickListener(v -> {if(listener != null) listener.onItemClick(cupom);});
     }
     @Override
     public int getItemCount() {

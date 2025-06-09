@@ -76,14 +76,6 @@ public class TelaLogin extends AppCompatActivity {
 //            ex.printStackTrace();
 //        }
 
-        /*if(dd.Verificar(texto1,texto2)){
-            dd.recebeAcesso(a,b);
-            c=dd.enviaAcesso();
-            startActivity(c);
-            finish();
-        }else{
-            Toast.makeText(this, "Usuário e/ou senha incorretos. Tente novamente.", Toast.LENGTH_SHORT).show();
-        }*/
     }
 
     public void Voltar(View v){
