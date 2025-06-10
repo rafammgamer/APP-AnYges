@@ -6,7 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,17 +22,42 @@ public class Index extends AppCompatActivity {
     Context a = Index.this;
     Class<?> b;
     Intent c;
+    EditText pesquisa;
+    ImageView btnMedicamento, btnConsulta, btnHigiene;
     Dados dd = new Dados();
     Conexao con = new Conexao();
     String usu;
+    private String categoriaAtual = null;
+    private String textoBuscaAtual = "";
     RecyclerView recyView;
-    ArrayList<Cupom> listaCupom = new ArrayList();
+    ArrayList<Cupom> listaCupom = new ArrayList<>();
+    ArrayList<Cupom> todosCupons = new ArrayList<>();
     CupomAdap adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_index);
+        pesquisa = findViewById(R.id.editPesquisa);
+        pesquisa.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                textoBuscaAtual = s.toString();
+                filtrar();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+        btnMedicamento = findViewById(R.id.imgBtnMed);
+        btnConsulta = findViewById(R.id.imgBtnCon);
+        btnHigiene = findViewById(R.id.imgBtnHig);
+        btnMedicamento.setOnClickListener(v -> filtrarCategoria("medicamento"));
+        btnConsulta.setOnClickListener(v -> filtrarCategoria("consulta"));
+        btnHigiene.setOnClickListener(v -> filtrarCategoria("beleza/higiene"));
         usu = dd.enviaDados();
         recyView = findViewById(R.id.recyCupons);
         recyView.setLayoutManager(new LinearLayoutManager(this));
@@ -60,6 +90,7 @@ public class Index extends AppCompatActivity {
                         con.RS.getDouble("valor"),
                         con.RS.getInt("desconto")
                 );
+                todosCupons.add(cupom);
                 listaCupom.add(cupom);
             }
             adapter.notifyDataSetChanged();
@@ -67,6 +98,28 @@ public class Index extends AppCompatActivity {
         }catch(Exception ex){
             ex.printStackTrace();
         }
+    }
+
+    public void filtrar(){
+        listaCupom.clear();
+        for(Cupom cupom : todosCupons){
+            boolean correspondeCategoria = (categoriaAtual == null || cupom.getTipo().equalsIgnoreCase(categoriaAtual));
+            boolean correspondeBusca = cupom.getNome().toLowerCase().contains(textoBuscaAtual.toLowerCase());
+
+            if (correspondeCategoria && correspondeBusca) {
+                listaCupom.add(cupom);
+            }
+        }
+        adapter.notifyDataSetChanged();
+    }
+
+    public void filtrarCategoria(String categoria){
+        if(categoria.equalsIgnoreCase(categoriaAtual)){
+            categoriaAtual = null;
+        }else{
+            categoriaAtual = categoria;
+        }
+        filtrar();
     }
 
     public void Perfil(View v){

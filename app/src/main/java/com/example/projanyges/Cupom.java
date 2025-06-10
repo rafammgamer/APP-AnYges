@@ -30,6 +30,8 @@ public class Cupom {
         return descricao;
     }
 
+    public String getTipo() {return tipo;}
+
     public double getValor(){
         return valor;
     }
